@@ -3,7 +3,7 @@ import amqp from "amqplib/callback_api.js";
 
 const prisma = new PrismaClient();
 
-export const getMatch = async (req, res) => {
+export const getMatchRequestDetail = async (req, res) => {
       try {
           const match = await prisma.match.findMany({
               where: { matchPetId1: req.params.petId } || { matchPetId2: req.params.petId }
@@ -17,7 +17,7 @@ export const getMatch = async (req, res) => {
       }
   }
 
-export const sendMatch = async (req, res) => {
+export const sendMatchRequest = async (req, res) => {
     amqp.connect('amqp://localhost', function(error0, connection) {
         if (error0) {
             res.status(500).json({ error: 'Failed to connect to RabbitMQ' });

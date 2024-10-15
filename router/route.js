@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getMatch,sendMatch } from "../controller/match.js";
+import { getMatchRequestDetail,sendMatchRequest } from "../controller/match.js";
 const route = Router();
 
-route.get("/getMatch/:id", getMatch);
-route.post("/sendMatch", sendMatch);
+route.get("/getMatchRequestDetail/:id", getMatchRequestDetail);
+route.post("/sendMatchRequest", sendMatchRequest);
 
 export default route;
