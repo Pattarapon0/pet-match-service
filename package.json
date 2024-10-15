@@ -1,0 +1,22 @@
+{
+  "name": "pet_match_service",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "https://github.com/Pattarapon0/pet_match_service.git",
+  "license": "MIT",
+  "scripts": {
+    "start": "node index.js",
+    "test": "concurrently \"nodemon index.js\" \"nodemon consumer/sendMatchHandler.js\""
+  },
+  "type": "module",
+  "dependencies": {
+    "@prisma/client": "^5.20.0",
+    "amqplib": "^0.10.4",
+    "body-parser": "^1.20.3",
+    "concurrently": "^9.0.1",
+    "express": "^4.21.0",
+    "nodemon": "^3.1.7",
+    "pet_match_service": "file:",
+    "prisma": "^5.20.0"
+  }
+}

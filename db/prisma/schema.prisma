@@ -1,0 +1,25 @@
+datasource db {
+  provider = "mongodb"
+  url      = env("MONGO_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "./generated/client2"
+}
+
+model match{
+  matchId String @id @default(uuid()) @map("_id")
+  matchDate DateTime @default(now())
+  matchPetId1 String
+  matchPetId2 String
+  matchUserId1 String
+  matchUserId2 String
+}
+
+model sendMatch{
+  sendMatchId String @id @default(uuid()) @map("_id")
+  senderPettId String
+  senderUserId String
+  receiverPetId String
+}
