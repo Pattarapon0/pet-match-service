@@ -5,21 +5,22 @@ datasource db {
 
 generator client {
   provider = "prisma-client-js"
-  output   = "./generated/client2"
 }
 
 model match{
-  matchId String @id @default(uuid()) @map("_id")
-  matchDate DateTime @default(now())
+  matchId String @id @map("_id") @db.ObjectId @default(auto())
+  matchDate DateTime @default(now()) @db.Date
   matchPetId1 String
-  matchPetId2 String
-  matchUserId1 String
+  matchPetId2 String 
+  matchUserId1 String 
   matchUserId2 String
+  matchPetName1 String 
+  matchPetName2 String
+  matchStatus EnumMatchStatus @default(SENDED)
 }
 
-model sendMatch{
-  sendMatchId String @id @default(uuid()) @map("_id")
-  senderPettId String
-  senderUserId String
-  receiverPetId String
+
+enum EnumMatchStatus{
+  SENDED
+  MATCHED
 }
