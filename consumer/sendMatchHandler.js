@@ -36,15 +36,22 @@ amqp.connect("amqp://localhost", (error0, connection) => {
                     channel.nack(msg, false, true);
                 })
                 if (!sendMatch) {
-                    const sendMatch = await prisma.match.create({
-                        data: {
+                    const sendMatch = await prisma.match.upsert({
+                        where: {
+                            matchPetId1_matchPetId2: {
+                                matchPetId1: senderPetId,
+                                matchPetId2: receiverPetId
+                            }
+                        },
+                        create: {
                             matchPetId1: senderPetId,
                             matchUserId1: senderUserId,
                             matchPetName1:senderPetName,
                             matchPetId2: receiverPetId,
                             matchUserId2: receiverUserId,
                             matchPetName2:receiverPetName
-                        }
+                        },
+                        update: {}
                     }).catch((error) => {
                         console.log(error);
                         channel.nack(msg, false, true);

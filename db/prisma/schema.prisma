@@ -10,13 +10,14 @@ generator client {
 model match{
   matchId String @id @map("_id") @db.ObjectId @default(auto())
   matchDate DateTime @default(now()) @db.Date
-  matchPetId1 String
+  matchPetId1 String 
   matchPetId2 String 
   matchUserId1 String 
   matchUserId2 String
   matchPetName1 String 
   matchPetName2 String
   matchStatus EnumMatchStatus @default(SENDED)
+  @@unique([matchPetId1, matchPetId2])
 }
 
 
