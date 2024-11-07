@@ -58,16 +58,16 @@ export const sendMatchRequest = async (req, res) => {
             
             try {
                 // Check if the channel is open
-                    // Send the message to the queue
-                    const isSent = channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)), {
-                        persistent: true
-                    });
-    
-                    if (isSent) {
-                        res.status(200).json({ message: 'Match successfully sent to queue' });
-                    } else {
-                        throw new Error('Message could not be sent to queue');
-                    }
+                // Send the message to the queue
+                const isSent = channel.sendToQueue(queue, Buffer.from(JSON.stringify(msg)), {
+                    persistent: true
+                });
+
+                if (isSent) {
+                    res.status(200).json({ message: 'Match successfully sent to queue' });
+                } else {
+                    throw new Error('Message could not be sent to queue');
+                }
               
             } catch (error) {
                 console.error('Error sending message:', error);
@@ -81,7 +81,7 @@ export const sendMatchRequest = async (req, res) => {
                     if (connection && connection.close) {
                         connection.close();  // Close the connection
                     }
-                }, 50000);
+                }, 500); // Reduced delay to 500ms
             }
         });
     });
