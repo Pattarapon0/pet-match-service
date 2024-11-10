@@ -5,11 +5,12 @@ const prisma = new PrismaClient();
 
 export const getMatchRequestDetail = async (req, res) => {
       try {
-          const match = await prisma.match.findMany({
+        console.log(req.body);  
+        const match = await prisma.match.findMany({
             where: {
                 OR: [
-                    { matchPetId1: req.params.petId },
-                    { matchPetId2: req.params.petId }
+                    { matchUserId1: req.body.senderUserId },
+                    { matchUserId2: req.body.senderUserId }
                 ],
                 matchStatus: "MATCHED" // This will be combined with the OR conditions
             },
@@ -23,18 +24,16 @@ export const getMatchRequestDetail = async (req, res) => {
                 matchUserId2: true
           }});
           match.forEach((match) => {
-              if (match.matchPetId1 === req.params.petId) {
-                  match.matchPetId1 = match.matchPetId2;
-                  match.matchPetName1 = match.matchPetName2;
-                  match.matchUserId1 = match.matchUserId2;
+              if (match.matchUserId1 === req.body.senderUserId) {
+                  match.matchPetId1 = [match.matchPetId2, match.matchPetId2 = match.matchPetId1][0];
+                  match.matchPetName1 = [match.matchPetName2, match.matchPetName2 = match.matchPetName1][0];
+                  match.matchUserId1 = [match.matchUserId2, match.matchUserId2 = match.matchUserId1][0];
               } 
-                delete match.matchPetId2;
-                delete match.matchPetName2;
-                delete match.matchUserId2;
               })
           if (match.length === 0) {
               return res.status(404).send({ message: "No matches found for the given petId" });
           }
+          console.log(JSON.stringify(match));
           res.status(200).send(JSON.stringify(match));
       } catch (error) {
           res.status(500).send(error);
@@ -55,7 +54,7 @@ export const sendMatchRequest = async (req, res) => {
     
             const queue = 'match';
             const msg = req.body;
-            
+            console.log(msg);
             try {
                 // Check if the channel is open
                 // Send the message to the queue

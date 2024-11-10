@@ -27,12 +27,12 @@ amqp.connect("amqp://localhost", (error0, connection) => {
                 try {
                     const message = JSON.parse(msg.content.toString());
                     const { senderUserId, senderPetId, senderPetName, receiverUserId, receiverPetId, receiverPetName } = message;
-                    console.log(" [x] Received %s", msg.content.toString());
-
                     const sendMatch = await prisma.match.findFirst({
                         where: {
-                            matchPetId1: receiverPetId,
-                            matchPetId2: senderPetId
+                            AND: [
+                                { matchPetId1: receiverPetId },
+                                { matchPetId2: senderPetId }
+                            ]
                         }
                     });
 
