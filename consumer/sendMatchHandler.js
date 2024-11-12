@@ -3,7 +3,7 @@ import { PrismaClient } from "@prisma/client";
 
 const prisma = new PrismaClient();
 
-amqp.connect("amqp://localhost", (error0, connection) => {
+amqp.connect(`amqp://${process.env.RABBITMQ_URI}`, (error0, connection) => {
     if (error0) {
         console.error("Connection error:", error0);
         return;

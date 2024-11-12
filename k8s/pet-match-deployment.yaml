@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pet-match
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pet-match
+  template:
+    metadata:
+      labels:
+        app: pet-match
+    spec:
+      containers:
+      - name: pet-match
+        image: pet-match:latest
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: 5693
